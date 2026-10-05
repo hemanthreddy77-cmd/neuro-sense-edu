@@ -11,6 +11,7 @@ import {
   Search,
   ChevronDown,
   Plus,
+  Sparkles,
 } from "lucide-react";
 import { useState, type ReactNode } from "react";
 import { Logo } from "../common/Logo";
@@ -23,6 +24,7 @@ const NAV: NavItem[] = [
   { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { to: "/dashboard", label: "My Courses", icon: BookOpen },
   { to: "/learn/c1",  label: "Learning",   icon: PlayCircle },
+  { to: "/lesson-studio", label: "AI Lesson Studio", icon: Sparkles },
   { to: "/analytics", label: "Analytics",  icon: BarChart3 },
   { to: "/admin",     label: "Admin",      icon: Shield, adminOnly: true },
   { to: "/settings",  label: "Settings",   icon: Settings },
