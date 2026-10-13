@@ -1,15 +1,12 @@
 import { initializeApp, getApps, getApp, type FirebaseApp } from "firebase/app";
-import {
-  getAuth,
-  GoogleAuthProvider,
-  type Auth,
-} from "firebase/auth";
+import { getAuth, GoogleAuthProvider, type Auth } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "AIzaSyDn0YYkHz9EDRsFQHSOYVWrFHnFg6FakEA",
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "neuro-ai-3a5bd.firebaseapp.com",
   projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "neuro-ai-3a5bd",
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "neuro-ai-3a5bd.firebasestorage.app",
+  storageBucket:
+    import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "neuro-ai-3a5bd.firebasestorage.app",
   messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "102350442261",
   appId: import.meta.env.VITE_FIREBASE_APP_ID || "1:102350442261:web:ea065d8869a13f58f0e31c",
 };
@@ -18,7 +15,9 @@ let app: FirebaseApp | null = null;
 let auth: Auth | null = null;
 const googleProvider = new GoogleAuthProvider();
 
-export const isFirebaseClientReady = Boolean(firebaseConfig.apiKey && firebaseConfig.apiKey.length > 5);
+export const isFirebaseClientReady = Boolean(
+  firebaseConfig.apiKey && firebaseConfig.apiKey.length > 5,
+);
 
 if (typeof window !== "undefined" && isFirebaseClientReady) {
   try {
