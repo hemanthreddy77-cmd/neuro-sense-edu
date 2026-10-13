@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { CheckCircle2, XCircle, ArrowRight, RotateCcw, Trophy } from "lucide-react";
 import { GradientButton } from "@/components/common/GradientButton";
+import { useNotifications } from "@/contexts/NotificationContext";
 
 interface TriviaChallengeProps {
   onComplete?: () => void;
@@ -67,6 +68,7 @@ const QUESTIONS: Question[] = [
 ];
 
 export function TriviaChallenge({ onComplete }: TriviaChallengeProps) {
+  const { addNotification } = useNotifications();
   const [currentIdx, setCurrentIdx] = useState(0);
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
   const [score, setScore] = useState(0);
@@ -91,6 +93,12 @@ export function TriviaChallenge({ onComplete }: TriviaChallengeProps) {
       setIsAnswered(false);
     } else {
       setIsFinished(true);
+      addNotification({
+        type: "achievement",
+        category: "achievements",
+        title: "Trivia Milestone Earned! 🏆",
+        message: `You completed the Brain & Science Challenge with ${score + (selectedIdx === q.correctIdx ? 1 : 0)}/${QUESTIONS.length} correct!`,
+      });
       onComplete?.();
     }
   };

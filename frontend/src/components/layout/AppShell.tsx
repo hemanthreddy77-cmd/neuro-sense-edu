@@ -17,6 +17,7 @@ import {
 import { useState, type ReactNode } from "react";
 import { Logo } from "../common/Logo";
 import { useAuth } from "@/contexts/AuthContext";
+import { useNotifications } from "@/contexts/NotificationContext";
 import { cn } from "@/lib/utils";
 
 type NavItem = { to: string; label: string; icon: typeof LayoutDashboard; adminOnly?: boolean };
@@ -33,6 +34,7 @@ const NAV: NavItem[] = [
 
 export function AppShell({ children, title }: { children: ReactNode; title?: string }) {
   const { user, logout } = useAuth();
+  const { unreadCount, openDrawer } = useNotifications();
   const navigate = useNavigate();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const [menuOpen, setMenuOpen] = useState(false);
@@ -117,11 +119,16 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
             </div>
             <div className="flex items-center gap-2">
               <button
+                onClick={openDrawer}
                 className="relative inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition"
-                aria-label="Notifications"
+                aria-label={`Notifications${unreadCount > 0 ? ` (${unreadCount} unread)` : ""}`}
               >
                 <Bell className="h-4 w-4 text-foreground/80" />
-                <span className="absolute top-2 right-2 h-1.5 w-1.5 rounded-full bg-rose-500" />
+                {unreadCount > 0 && (
+                  <span className="absolute -top-1 -right-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-linear-to-r from-brand to-violet px-1 text-[9px] font-bold text-background shadow">
+                    {unreadCount > 9 ? "9+" : unreadCount}
+                  </span>
+                )}
               </button>
               <div className="relative">
                 <button

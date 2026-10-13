@@ -160,4 +160,31 @@ export const api = {
       }),
     getStats: () => request<{ success: boolean; stats: any }>("/api/admin/stats"),
   },
+
+  // Notification & Web Push APIs
+  notifications: {
+    getVapidPublicKey: () =>
+      request<{ success: boolean; publicKey: string }>("/api/notifications/vapid-public-key"),
+    subscribe: (subscription: PushSubscription) =>
+      request<{ success: boolean; message: string }>("/api/notifications/subscribe", {
+        method: "POST",
+        body: JSON.stringify(subscription),
+      }),
+    unsubscribe: (endpoint: string) =>
+      request<{ success: boolean; message: string }>("/api/notifications/unsubscribe", {
+        method: "POST",
+        body: JSON.stringify({ endpoint }),
+      }),
+    getPreferences: () =>
+      request<{ success: boolean; preferences: any }>("/api/notifications/preferences"),
+    updatePreferences: (preferences: any) =>
+      request<{ success: boolean; preferences: any }>("/api/notifications/preferences", {
+        method: "PUT",
+        body: JSON.stringify({ preferences }),
+      }),
+    sendTestPush: () =>
+      request<{ success: boolean; message: string }>("/api/notifications/test", {
+        method: "POST",
+      }),
+  },
 };

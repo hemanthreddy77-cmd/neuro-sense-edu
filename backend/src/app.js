@@ -10,6 +10,7 @@ import sessionsRoutes from "./routes/sessions.routes.js";
 import emotionsRoutes from "./routes/emotions.routes.js";
 import adminRoutes from "./routes/admin.routes.js";
 import emotionshiftRoutes from "./routes/emotionshift.routes.js";
+import notificationsRoutes from "./routes/notifications.routes.js";
 
 dotenv.config();
 
@@ -72,6 +73,7 @@ app.use("/api/sessions", sessionsRoutes);
 app.use("/api/emotions", emotionsRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/emotionshift", emotionshiftRoutes);
+app.use("/api/notifications", notificationsRoutes);
 
 // 404 Route Handler
 app.use((req, res) => {

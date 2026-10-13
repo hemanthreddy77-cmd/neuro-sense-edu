@@ -1,9 +1,10 @@
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Bell } from "lucide-react";
 import { Logo } from "../common/Logo";
 import { GradientButton } from "../common/GradientButton";
 import { useAuth } from "@/contexts/AuthContext";
+import { useNotifications } from "@/contexts/NotificationContext";
 
 const links = [
   { to: "/", label: "Home" },
@@ -17,6 +18,7 @@ const links = [
 export function Navbar() {
   const [open, setOpen] = useState(false);
   const { isAuthenticated } = useAuth();
+  const { unreadCount, openDrawer } = useNotifications();
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50">
@@ -35,29 +37,45 @@ export function Navbar() {
               </li>
             ))}
           </ul>
-          <div className="hidden lg:flex items-center gap-2">
-            {isAuthenticated ? (
-              <Link to="/dashboard">
-                <GradientButton>Dashboard</GradientButton>
-              </Link>
-            ) : (
-              <>
-                <Link to="/login">
-                  <GradientButton variant="ghost">Login</GradientButton>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={openDrawer}
+              className="relative inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/5 border border-white/10 hover:bg-white/10 text-foreground transition"
+              aria-label={`Notifications${unreadCount > 0 ? ` (${unreadCount} unread)` : ""}`}
+            >
+              <Bell className="h-4 w-4" />
+              {unreadCount > 0 && (
+                <span className="absolute -top-1 -right-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-linear-to-r from-brand to-violet px-1 text-[9px] font-bold text-background shadow">
+                  {unreadCount > 9 ? "9+" : unreadCount}
+                </span>
+              )}
+            </button>
+
+            <div className="hidden lg:flex items-center gap-2">
+              {isAuthenticated ? (
+                <Link to="/dashboard">
+                  <GradientButton>Dashboard</GradientButton>
                 </Link>
-                <Link to="/register">
-                  <GradientButton>Register</GradientButton>
-                </Link>
-              </>
-            )}
+              ) : (
+                <>
+                  <Link to="/login">
+                    <GradientButton variant="ghost">Login</GradientButton>
+                  </Link>
+                  <Link to="/register">
+                    <GradientButton>Register</GradientButton>
+                  </Link>
+                </>
+              )}
+            </div>
+
+            <button
+              className="lg:hidden inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/5 border border-white/10"
+              onClick={() => setOpen((v) => !v)}
+              aria-label="Toggle menu"
+            >
+              {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+            </button>
           </div>
-          <button
-            className="lg:hidden inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/5 border border-white/10"
-            onClick={() => setOpen((v) => !v)}
-            aria-label="Toggle menu"
-          >
-            {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
-          </button>
         </nav>
 
         {open && (

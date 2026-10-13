@@ -13,6 +13,14 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { AuthProvider } from "../contexts/AuthContext";
 import { CoursesProvider } from "../contexts/CoursesContext";
+import { NotificationProvider } from "../contexts/NotificationContext";
+import { registerServiceWorker } from "../lib/pwa-register";
+import { OfflineIndicator } from "../components/pwa/OfflineIndicator";
+import { PwaUpdateToast } from "../components/pwa/PwaUpdateToast";
+import { InstallPromptModal } from "../components/pwa/InstallPromptModal";
+import { NotificationPermissionModal } from "../components/notifications/NotificationPermissionModal";
+import { NotificationToastContainer } from "../components/notifications/NotificationToastContainer";
+import { NotificationCenterDrawer } from "../components/notifications/NotificationCenterDrawer";
 
 function NotFoundComponent() {
   return (
@@ -78,13 +86,19 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   head: () => ({
     meta: [
       { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
       { title: "NeuroLearn AI — Smart Emotion-Based Learning Platform" },
       {
         name: "description",
         content:
           "NeuroLearn AI is an emotion-aware adaptive learning platform that reads how you feel and reshapes lessons in real time.",
       },
+      { name: "theme-color", content: "#0a0d18" },
+      { name: "mobile-web-app-capable", content: "yes" },
+      { name: "apple-mobile-web-app-capable", content: "yes" },
+      { name: "apple-mobile-web-app-status-bar-style", content: "black-translucent" },
+      { name: "application-name", content: "NeuroLearn AI" },
+      { name: "apple-mobile-web-app-title", content: "NeuroLearn" },
       { name: "author", content: "NeuroLearn AI" },
       { property: "og:title", content: "NeuroLearn AI — Smart Emotion-Based Learning" },
       {
@@ -95,7 +109,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
+      { rel: "manifest", href: "/manifest.webmanifest" },
       { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
+      { rel: "apple-touch-icon", href: "/icons/icon-192x192.png" },
       { rel: "stylesheet", href: appCss },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
@@ -127,11 +143,24 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+
+  useEffect(() => {
+    registerServiceWorker();
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <CoursesProvider>
-          <Outlet />
+          <NotificationProvider>
+            <Outlet />
+            <OfflineIndicator />
+            <PwaUpdateToast />
+            <InstallPromptModal />
+            <NotificationPermissionModal />
+            <NotificationToastContainer />
+            <NotificationCenterDrawer />
+          </NotificationProvider>
         </CoursesProvider>
       </AuthProvider>
     </QueryClientProvider>

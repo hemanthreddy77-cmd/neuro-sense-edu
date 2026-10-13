@@ -8,6 +8,7 @@ import { WebcamPanel } from "@/components/common/WebcamPanel";
 import { AdaptiveBanner } from "@/components/common/AdaptiveBanner";
 import { type EmotionKey } from "@/data/mockData";
 import { useCourses } from "@/contexts/CoursesContext";
+import { useNotifications } from "@/contexts/NotificationContext";
 
 export const Route = createFileRoute("/_authenticated/learn/$courseId")({
   head: ({ params }) => ({
@@ -23,6 +24,7 @@ function LearnPage() {
   const { courseId } = Route.useParams();
   const navigate = useNavigate();
   const { getCourse, courses } = useCourses();
+  const { addNotification } = useNotifications();
   const course = getCourse(courseId) ?? courses[0];
   const [emotion, setEmotion] = useState<EmotionKey>("focused");
   const [lessonIdx, setLessonIdx] = useState(3);
@@ -115,7 +117,18 @@ function LearnPage() {
                 >
                   <ChevronLeft className="h-4 w-4" /> Previous
                 </button>
-                <GradientButton onClick={() => setLessonIdx((i) => i + 1)}>
+                <GradientButton
+                  onClick={() => {
+                    const nextIdx = lessonIdx + 1;
+                    setLessonIdx(nextIdx);
+                    addNotification({
+                      type: "success",
+                      category: "learning_reminders",
+                      title: "Lesson Completed! 🎉",
+                      message: `You've advanced to Lesson ${nextIdx + 1} of ${course.lessons} in ${course.title}.`,
+                    });
+                  }}
+                >
                   Next Lesson <ChevronRight className="h-4 w-4" />
                 </GradientButton>
               </div>
