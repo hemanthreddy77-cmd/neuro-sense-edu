@@ -3,7 +3,24 @@
  * Connects frontend views to the Express Node.js backend.
  */
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+function getApiBaseUrl(): string {
+  const configured = import.meta.env.VITE_API_URL;
+  if (configured && !configured.includes("localhost") && !configured.includes("127.0.0.1")) {
+    return configured.replace(/\/+$/, "");
+  }
+  if (typeof window !== "undefined") {
+    const isLocalhost =
+      window.location.hostname === "localhost" ||
+      window.location.hostname === "127.0.0.1" ||
+      window.location.hostname === "0.0.0.0";
+    if (isLocalhost) {
+      return (configured || "http://localhost:5000").replace(/\/+$/, "");
+    }
+    // Remote production host without valid external VITE_API_URL
+    return "";
+  }
+  return configured ? configured.replace(/\/+$/, "") : "http://localhost:5000";
+}
 
 function getAuthHeaders(): HeadersInit {
   const headers: Record<string, string> = {
@@ -20,7 +37,14 @@ function getAuthHeaders(): HeadersInit {
 }
 
 async function request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
-  const url = `${API_BASE_URL}${endpoint}`;
+  const baseUrl = getApiBaseUrl();
+  if (!baseUrl && typeof window !== "undefined") {
+    // Prevent browser loopback CORS blocking error when VITE_API_URL is not set on remote host
+    throw new Error(
+      `[NeuroLearn API] VITE_API_URL is not configured for ${window.location.hostname}. Please set VITE_API_URL in your Vercel project settings to your deployed backend URL.`,
+    );
+  }
+  const url = `${baseUrl}${endpoint}`;
   const response = await fetch(url, {
     ...options,
     headers: {
