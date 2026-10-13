@@ -10,10 +10,12 @@ dist-ssr/
 .tanstack/**
 .nitro/
 
-# Environment files
+# Environment & Secret files
 .env
 .env*.local
 *.local
+*serviceAccount*.json
+serviceAccountKey.json
 
 # Logs
 logs/
