@@ -18,7 +18,7 @@ export const Route = createFileRoute("/login")({
 });
 
 function LoginPage() {
-  const { login } = useAuth();
+  const { login, loginWithGoogle } = useAuth();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -31,12 +31,38 @@ function LoginPage() {
       setError("Please enter your email.");
       return;
     }
+    if (!password) {
+      setError("Please enter your password.");
+      return;
+    }
     setBusy(true);
     try {
       await login(email, password);
       navigate({ to: "/dashboard" });
-    } catch (e) {
-      setError("Login failed. Try again.");
+    } catch (e: any) {
+      const code = e?.code || "";
+      if (code === "auth/invalid-credential" || code === "auth/wrong-password" || code === "auth/user-not-found") {
+        setError("Invalid email or password.");
+      } else if (code === "auth/too-many-requests") {
+        setError("Too many failed attempts. Please try again later.");
+      } else {
+        setError(e?.message || "Login failed. Try again.");
+      }
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const handleGoogle = async () => {
+    setError(null);
+    setBusy(true);
+    try {
+      await loginWithGoogle();
+      navigate({ to: "/dashboard" });
+    } catch (e: any) {
+      if (e?.code !== "auth/popup-closed-by-user") {
+        setError(e?.message || "Google sign-in failed. Try again.");
+      }
     } finally {
       setBusy(false);
     }
@@ -67,6 +93,7 @@ function LoginPage() {
         },
       ]}
       onSubmit={submit}
+      onGoogleSubmit={handleGoogle}
       submitLabel="Login"
       busy={busy}
       error={error}

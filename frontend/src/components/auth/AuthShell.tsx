@@ -33,6 +33,7 @@ export function AuthShell({
   subtitle: string;
   fields: Field[];
   onSubmit: () => void;
+  onGoogleSubmit?: () => void;
   submitLabel: string;
   busy?: boolean;
   error?: string | null;
@@ -130,8 +131,10 @@ export function AuthShell({
           </div>
 
           <button
-            onClick={onSubmit}
-            className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-white/15 bg-white px-4 py-2.5 text-sm font-semibold text-[#1a1a1a] hover:bg-white/95 transition"
+            type="button"
+            onClick={onGoogleSubmit || onSubmit}
+            disabled={busy}
+            className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-white/15 bg-white px-4 py-2.5 text-sm font-semibold text-[#1a1a1a] hover:bg-white/95 transition disabled:opacity-50"
           >
             <GoogleIcon />
             Continue with Google
