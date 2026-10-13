@@ -21,8 +21,7 @@ export function CourseShowcase() {
   const filteredCourses = useMemo(() => {
     return courses.filter((c) => {
       const matchesCategory =
-        selectedCategory === "All" ||
-        c.category.toLowerCase() === selectedCategory.toLowerCase();
+        selectedCategory === "All" || c.category.toLowerCase() === selectedCategory.toLowerCase();
       const matchesSearch =
         !searchQuery.trim() ||
         c.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -46,8 +45,8 @@ export function CourseShowcase() {
               Explore all <span className="text-gradient">courses</span> across tech & AI
             </h2>
             <p className="mt-3 text-base text-muted-foreground">
-              Every course dynamically senses your emotional focus, fatigue, and confusion to adapt its
-              difficulty and pace in real-time.
+              Every course dynamically senses your emotional focus, fatigue, and confusion to adapt
+              its difficulty and pace in real-time.
             </p>
           </div>
 
@@ -102,8 +101,12 @@ export function CourseShowcase() {
           </div>
         ) : (
           <div className="mt-12 rounded-2xl border border-white/10 bg-white/5 p-12 text-center">
-            <p className="text-base font-medium text-foreground">No courses found matching your filter</p>
-            <p className="mt-1 text-sm text-muted-foreground">Try clearing your search query or picking "All".</p>
+            <p className="text-base font-medium text-foreground">
+              No courses found matching your filter
+            </p>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Try clearing your search query or picking "All".
+            </p>
             <button
               onClick={() => {
                 setSelectedCategory("All");
