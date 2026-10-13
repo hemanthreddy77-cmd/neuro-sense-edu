@@ -1,0 +1,289 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-surface: var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
+
+  --color-brand: var(--brand);
+  --color-brand-foreground: var(--brand-foreground);
+  --color-brand-glow: var(--brand-glow);
+  --color-violet: var(--violet);
+  --color-violet-glow: var(--violet-glow);
+
+  --color-emotion-happy: var(--emotion-happy);
+  --color-emotion-focused: var(--emotion-focused);
+  --color-emotion-confused: var(--emotion-confused);
+  --color-emotion-bored: var(--emotion-bored);
+  --color-emotion-angry: var(--emotion-angry);
+  --color-emotion-curious: var(--emotion-curious);
+  --color-emotion-motivated: var(--emotion-motivated);
+
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+:root {
+  --radius: 0.875rem;
+
+  /* Deep navy background system */
+  --background: oklch(0.16 0.03 270);
+  --foreground: oklch(0.98 0.005 250);
+  --surface: oklch(0.21 0.035 270);
+  --surface-elevated: oklch(0.25 0.04 270);
+
+  --card: oklch(0.21 0.035 270);
+  --card-foreground: oklch(0.98 0.005 250);
+  --popover: oklch(0.21 0.035 270);
+  --popover-foreground: oklch(0.98 0.005 250);
+
+  /* Electric blue brand */
+  --brand: oklch(0.68 0.18 255);
+  --brand-foreground: oklch(0.16 0.03 270);
+  --brand-glow: oklch(0.78 0.16 250);
+
+  /* Soft purple secondary */
+  --violet: oklch(0.62 0.14 305);
+  --violet-glow: oklch(0.72 0.16 305);
+
+  --primary: oklch(0.68 0.18 255);
+  --primary-foreground: oklch(0.16 0.03 270);
+  --secondary: oklch(0.28 0.04 270);
+  --secondary-foreground: oklch(0.98 0.005 250);
+  --muted: oklch(0.26 0.035 270);
+  --muted-foreground: oklch(0.7 0.025 260);
+  --accent: oklch(0.62 0.14 305);
+  --accent-foreground: oklch(0.98 0.005 250);
+  --destructive: oklch(0.65 0.22 25);
+  --destructive-foreground: oklch(0.98 0.005 250);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 12%);
+  --ring: oklch(0.68 0.18 255);
+
+  /* Emotion palette */
+  --emotion-happy: oklch(0.78 0.17 145);
+  --emotion-focused: oklch(0.7 0.15 200);
+  --emotion-confused: oklch(0.82 0.16 90);
+  --emotion-bored: oklch(0.72 0.16 55);
+  --emotion-angry: oklch(0.68 0.22 25);
+  --emotion-curious: oklch(0.72 0.15 305);
+  --emotion-motivated: oklch(0.74 0.16 175);
+
+  --chart-1: oklch(0.68 0.18 255);
+  --chart-2: oklch(0.62 0.14 305);
+  --chart-3: oklch(0.78 0.17 145);
+  --chart-4: oklch(0.82 0.16 90);
+  --chart-5: oklch(0.65 0.22 25);
+
+  --sidebar: oklch(0.18 0.035 270);
+  --sidebar-foreground: oklch(0.98 0.005 250);
+  --sidebar-primary: oklch(0.68 0.18 255);
+  --sidebar-primary-foreground: oklch(0.16 0.03 270);
+  --sidebar-accent: oklch(0.26 0.04 270);
+  --sidebar-accent-foreground: oklch(0.98 0.005 250);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.68 0.18 255);
+}
+
+.dark {
+  /* Same as root — app is dark by default */
+  --background: oklch(0.16 0.03 270);
+  --foreground: oklch(0.98 0.005 250);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html,
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+/* Glass card utility */
+@utility glass-card {
+  background: color-mix(in oklab, var(--surface) 55%, transparent);
+  backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid color-mix(in oklab, white 8%, transparent);
+  box-shadow: 0 8px 30px -12px oklch(0 0 0 / 0.5);
+}
+
+@utility glass-strong {
+  background: color-mix(in oklab, var(--surface-elevated) 75%, transparent);
+  backdrop-filter: blur(22px) saturate(160%);
+  border: 1px solid color-mix(in oklab, white 10%, transparent);
+}
+
+@utility text-gradient {
+  background: linear-gradient(120deg, var(--brand-glow), var(--violet-glow));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility btn-gradient {
+  background: linear-gradient(120deg, var(--brand), var(--violet));
+  color: var(--brand-foreground);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    filter 0.2s ease;
+}
+
+@utility hover-scale {
+  transition: transform 0.2s ease;
+}
+.hover-scale:hover {
+  transform: scale(1.03);
+}
+
+@utility hero-grid-bg {
+  background-image:
+    radial-gradient(
+      ellipse 80% 50% at 50% -10%,
+      color-mix(in oklab, var(--brand) 25%, transparent),
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 60% 40% at 80% 20%,
+      color-mix(in oklab, var(--violet) 22%, transparent),
+      transparent 60%
+    ),
+    linear-gradient(180deg, var(--background), var(--background));
+}
+
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}
+@keyframes drift {
+  0% {
+    transform: translate(0, 0);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translate(20px, -30px);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(0, 0);
+    opacity: 0.6;
+  }
+}
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes gradient-shift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--brand) 60%, transparent);
+  }
+  70% {
+    box-shadow: 0 0 0 14px color-mix(in oklab, var(--brand) 0%, transparent);
+  }
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--brand) 0%, transparent);
+  }
+}
+
+.animate-float {
+  animation: float-y 6s ease-in-out infinite;
+}
+.animate-drift {
+  animation: drift 9s ease-in-out infinite;
+}
+.animate-fade-in-up {
+  animation: fade-in-up 0.7s ease-out both;
+}
+.animate-pulse-ring {
+  animation: pulse-ring 2s infinite;
+}
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 6s ease infinite;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: color-mix(in oklab, var(--brand) 30%, transparent);
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in oklab, var(--brand) 50%, transparent);
+}
