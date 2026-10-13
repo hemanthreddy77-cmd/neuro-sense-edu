@@ -6,12 +6,12 @@ import {
 } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "AIzaSyDn0YYkHz9EDRsFQHSOYVWrFHnFg6FakEA",
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "neuro-ai-3a5bd.firebaseapp.com",
   projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "neuro-ai-3a5bd",
   storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "neuro-ai-3a5bd.firebasestorage.app",
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "115752810524",
-  appId: import.meta.env.VITE_FIREBASE_APP_ID || "",
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "102350442261",
+  appId: import.meta.env.VITE_FIREBASE_APP_ID || "1:102350442261:web:ea065d8869a13f58f0e31c",
 };
 
 let app: FirebaseApp | null = null;
