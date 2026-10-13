@@ -82,3 +82,5 @@ export async function verifyAuth(req, res, next) {
     });
   }
 }
+
+export { verifyAuth as authenticate };

@@ -29,6 +29,13 @@ const clientEmail = process.env.FIREBASE_CLIENT_EMAIL;
 let privateKey = process.env.FIREBASE_PRIVATE_KEY;
 
 if (privateKey) {
+  // Strip surrounding quotes if present from dashboard copy-paste
+  if (
+    (privateKey.startsWith('"') && privateKey.endsWith('"')) ||
+    (privateKey.startsWith("'") && privateKey.endsWith("'"))
+  ) {
+    privateKey = privateKey.slice(1, -1);
+  }
   // Normalize escaped newlines from environment variable strings
   privateKey = privateKey.replace(/\\n/g, "\n");
 }

@@ -9,6 +9,7 @@ dist-ssr/
 .vinxi/
 .tanstack/**
 .nitro/
+.vercel/
 
 # Environment & Secret files
 .env

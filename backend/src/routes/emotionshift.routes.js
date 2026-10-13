@@ -7,7 +7,7 @@ import {
   getSessions,
   getRecommendations,
 } from "../controllers/emotionshift.controller.js";
-import { authenticate } from "../middleware/auth.js";
+import { verifyAuth } from "../middleware/auth.js";
 
 const router = Router();
 
